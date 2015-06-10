@@ -1,4 +1,17 @@
 class User < ActiveRecord::Base
-  has_many :books
-end
+	BCrypt::Engine.cost = 12
 
+	validates_prenence_of :email, uniqueness true
+	has_secure_password
+
+  has_many :users_books
+  has_many :books, through: :users_books
+
+  def self.confirm(user_email, unsecure_password)
+    user = User.find_by(email: user_email)
+    if user
+    	user.authenticate(unsecure_password)
+    end
+  end
+  
+end
