@@ -1,7 +1,8 @@
 class User < ActiveRecord::Base
 	BCrypt::Engine.cost = 12
 
-	validates_prenence_of :email, uniqueness true
+	validates_presence_of :email
+	
 	has_secure_password
 
   has_many :users_books
@@ -13,5 +14,5 @@ class User < ActiveRecord::Base
     	user.authenticate(unsecure_password)
     end
   end
-  
+
 end
